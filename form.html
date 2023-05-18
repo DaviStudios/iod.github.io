@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Application Form</title>
+  </head>
+  <body>
+    <h1>Application Form</h1>
+    <form id="application-form">
+      <label for="discord-name">Discord name and tag:</label>
+      <input type="text" id="discord-name" name="discord-name" required>
+      <br><br>
+      
+      <label for="reason">Why should we accept you?:</label>
+      <input type="text" id="reason" name="reason" required>
+      <br><br>
+      
+      <label for="experience">Do you have experience?:</label>
+      <input type="text" id="experience" name="experience" required>
+      <br><br>
+      
+      <label for="time-on-server">How long are you on the server?:</label>
+      <input type="text" id="time-on-server" name="time-on-server" required>
+      <br><br>
+      
+      <button type="button" id="send-button">Send</button>
+    </form>
+
+    <script>
+      // Add event listener to the Send button
+      document.getElementById("send-button").addEventListener("click", function() {
+        // Get user's answers from the input fields
+        var discordName = document.getElementById("discord-name").value;
+        var reason = document.getElementById("reason").value;
+        var experience = document.getElementById("experience").value;
+        var timeOnServer = document.getElementById("time-on-server").value;
+
+        // Create a JSON payload with the user's answers
+        var payload = {
+          "content": "Application Form Submission",
+          "embeds": [
+            {
+              "title": "Application Details",
+              "fields": [
+                {
+                  "name": "Discord name and tag:",
+                  "value": discordName
+                },
+                {
+                  "name": "Why should we accept you?:",
+                  "value": reason
+                },
+                {
+                  "name": "Do you have experience?:",
+                  "value": experience
+                },
+                {
+                  "name": "How long are you on the server?:",
+                  "value": timeOnServer
+                }
+              ]
+            }
+          ]
+        };
+
+        // Send the payload to the Discord webhook URL using fetch
+        fetch("https://discord.com/api/webhooks/1108726197686374451/FUudCybepPbBTiFc9jI5MMDMLnwzvqHSPOtbHExtQzca6qbLG0kJzmgtEYGOiQgRlkvD", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        })
+        .then(function(response) {
+          // Handle the response as needed
+          console.log(response);
+          alert("Application submitted successfully!");
+        })
+        .catch(function(error) {
+          // Handle any errors that occurred during the request
+          console.error(error);
+          alert("Error submitting the application. Please try again later.");
+        });
+      });
+    </script>
+  </body>
+</html>
